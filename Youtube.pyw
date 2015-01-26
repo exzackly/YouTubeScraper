@@ -59,10 +59,31 @@ addSongInfoLabelVar.set('Enter New Song:')
 addSongInfoLabel.pack()
 addSongInfoLabel.place(bordermode=OUTSIDE, x = 10, y = 80)
 
+#invoke when addSongButton or enter is pressed
+def addSongButtonPressed(event):
+    if songEntryTextfield.get() == '':
+        return
+    songsToFetch.append(songEntryTextfield.get())
+    songEntryTextfield.delete(0, tkinter.END)
+    songsToSearchTextArea = Text(root, height = len(songsToFetch)+1, width = 50)
+    songsToSearchTextArea.insert(INSERT, 'Queued Songs:')
+    for index, item in enumerate(songsToFetch):
+        songsToSearchTextArea.insert(INSERT, '\n' + str(index+1) + ' : ' + item)
+    songsToSearchTextArea.place(bordermode=OUTSIDE, x = 10, y = 110)
+    downloadSongsButton.place(bordermode=OUTSIDE, x = 150, y = 140+(len(songsToFetch)*16))
+    root.minsize(width=430, height=170+(len(songsToFetch)*16))
+    root.maxsize(width=430, height=170+(len(songsToFetch)*16))
+
 #add song text field initialization
 songEntryTextfield = Entry(root)
+songEntryTextfield.bind('<Return>', addSongButtonPressed)
 songEntryTextfield.pack()
 songEntryTextfield.place(bordermode=OUTSIDE, x = 105, y = 82.5, width = 240)
+
+#add song button initialization
+addSongButton = Button(root, text='Add Song', command= lambda: addSongButtonPressed(0))
+addSongButton.pack()
+addSongButton.place(bordermode=OUTSIDE, x = 350, y = 80)
 
 #queued songs list initialization
 songsToSearchTextArea = Text(root, height = 1, width = 50)
@@ -118,26 +139,6 @@ def downloadSongsButtonPressed():
 downloadSongsButton = Button(root, text='Begin Download', command= downloadSongsButtonPressed)
 downloadSongsButton.pack()
 downloadSongsButton.place(bordermode=OUTSIDE, x = 150, y = 140)
-
-#invoke when addSongButton is pressed
-def addSongButtonPressed():
-    if songEntryTextfield.get() == '':
-        return
-    songsToFetch.append(songEntryTextfield.get())
-    songEntryTextfield.delete(0, tkinter.END)
-    songsToSearchTextArea = Text(root, height = len(songsToFetch)+1, width = 50)
-    songsToSearchTextArea.insert(INSERT, 'Queued Songs:')
-    for index, item in enumerate(songsToFetch):
-        songsToSearchTextArea.insert(INSERT, '\n' + str(index+1) + ' : ' + item)
-    songsToSearchTextArea.place(bordermode=OUTSIDE, x = 10, y = 110)
-    downloadSongsButton.place(bordermode=OUTSIDE, x = 150, y = 140+(len(songsToFetch)*16))
-    root.minsize(width=430, height=170+(len(songsToFetch)*16))
-    root.maxsize(width=430, height=170+(len(songsToFetch)*16))
-
-#add song button initialization
-addSongButton = Button(root, text='Add Song', command= addSongButtonPressed)
-addSongButton.pack()
-addSongButton.place(bordermode=OUTSIDE, x = 350, y = 80)
 
 #update check function
 def updateCheck():
