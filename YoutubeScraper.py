@@ -107,7 +107,7 @@ songsToSearchTextArea.place(bordermode=OUTSIDE, x = 10, y = 110)
 
 #invoke when downloadSongsButton is pressed
 def downloadSongsButtonPressed():
-    for songDetail in songsToFetch:
+    for songIndex, songDetail in enumerate(songsToFetch):
         print('Starting ' + songDetail.upper() + '...')
         songDetail = songDetail.replace(' ','+')
         songDetail = songDetail.replace('&', '%26')
@@ -136,7 +136,7 @@ def downloadSongsButtonPressed():
         print('Downloading videos...')
         for URL in extractedURLs:
             downloadLink = 'http://www.youtube.com/watch?v=' + URL
-            os.system('youtube-dl.exe ' + downloadLink + ' -o "convertedFiles/%(title)s-%(id)s.%(ext)s" -x --audio-format "mp3" --audio-quality "256k"')
+            os.system('youtube-dl.exe ' + downloadLink + ' -o "convertedFiles/' + str(songIndex+1) + '%(title)s-%(id)s.%(ext)s" -x --audio-format "mp3" --audio-quality "256k"')
     root.destroy()
 
 #download songs button initialization
