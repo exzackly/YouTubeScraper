@@ -146,7 +146,7 @@ downloadSongsButton.place(bordermode=OUTSIDE, x = 150, y = 140)
 
 #update check function
 def updateCheck():
-    youtubeDLPageSource = urllib.request.urlopen('http://rg3.github.io/youtube-dl/download.html').read()
+    youtubeDLPageSource = urllib.request.urlopen('https://ytdl-org.github.io/youtube-dl/download.html').read()
     currentYoutubeDLVersion = re.findall('/youtube-dl">(.+?)</a>', str(youtubeDLPageSource))[0]
     localYoutubeDLVersion = subprocess.check_output('youtube-dl.exe --version', shell=True).decode()[:-2]
     if currentYoutubeDLVersion != localYoutubeDLVersion:
